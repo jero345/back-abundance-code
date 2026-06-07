@@ -1,0 +1,76 @@
+# ─────────────────────────────────────────────
+# Dependencies
+# ─────────────────────────────────────────────
+node_modules/
+**/node_modules/
+.pnp
+.pnp.js
+
+# ─────────────────────────────────────────────
+# Secrets — NEVER commit
+# ─────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.test
+backend/.env
+backend/.env.*
+frontend/.env
+frontend/.env.*
+
+# Keep the templates
+!.env.example
+!backend/.env.example
+!frontend/.env.example
+
+# ─────────────────────────────────────────────
+# Builds
+# ─────────────────────────────────────────────
+dist/
+build/
+**/dist/
+**/build/
+
+# Vite cache + timestamps
+.vite/
+**/vite.config.js.timestamp-*
+
+# ─────────────────────────────────────────────
+# IDE / OS
+# ─────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# ─────────────────────────────────────────────
+# Logs / runtime
+# ─────────────────────────────────────────────
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pids/
+*.pid
+*.seed
+
+# ─────────────────────────────────────────────
+# Misc
+# ─────────────────────────────────────────────
+coverage/
+.nyc_output/
+.cache/
+*.local
+
+# Source banco de imágenes (we already copied what we need to /public/img)
+frontend/BANCO DE IMÁGENES/
+
+# Claude config (machine-local)
+.claude/

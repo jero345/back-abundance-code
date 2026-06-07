@@ -1,0 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================
+   ABUNDANCE CODE — Light theme (Ivory / Moka / Champagne)
+   Palette:
+     Warm Ivory     #F5F1ED  → fondo principal
+     Beige Arena    #E8DCC8  → cards, bloques
+     Champagne Gold #D4AF37  → acentos (iconos, líneas)
+     Espresso Moka  #3D2817  → texto, botones
+   Typography: Montserrat (única fuente).
+   ========================================================= */
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #F5F1ED;
+    color: #3D2817;
+    font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+    color: #3D2817;
+    font-weight: 600;
+  }
+
+  h1 { font-size: 1.75rem;  line-height: 1.25; font-weight: 600; }   /* 28px SemiBold */
+  h2 { font-size: 1.125rem; line-height: 1.35; font-weight: 700; }   /* 18px Bold */
+  h3 { font-size: 1rem;     line-height: 1.40; font-weight: 600; }
+
+  p { color: #3D2817; }
+
+  a { color: inherit; text-decoration: none; }
+}
+
+@layer components {
+
+  /* --------- Buttons --------- */
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full transition-all duration-300;
+    background: #3D2817;
+    color: #F5F1ED;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.06em;
+    padding: 0.85rem 1.75rem;
+  }
+  .btn-primary:hover {
+    background: #1E1A16;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(61,40,23,0.18);
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center rounded-full transition-all duration-300;
+    background: transparent;
+    color: #3D2817;
+    border: 1px solid #3D2817;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 0.875rem;
+    letter-spacing: 0.06em;
+    padding: 0.85rem 1.75rem;
+  }
+  .btn-outline:hover {
+    background: #3D2817;
+    color: #F5F1ED;
+  }
+
+  /* Legacy aliases — kept so older pages keep working */
+  .btn-gold  { @apply btn-primary; }
+  .btn-ghost { @apply btn-outline; }
+
+  /* --------- Cards --------- */
+  .card-beige {
+    background: #E8DCC8;
+    border-radius: 1rem;
+    padding: 1.5rem;
+  }
+
+  .card-ivory {
+    background: #FFFFFF;
+    border: 1px solid #E8DCC8;
+    border-radius: 1rem;
+    padding: 1.5rem;
+  }
+
+  /* Glass card (legacy) — remapped to light */
+  .card-glass {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid #E8DCC8;
+    backdrop-filter: blur(8px);
+  }
+
+  .card-gold {
+    background: #FFFDF7;
+    border: 1px solid rgba(212, 175, 55, 0.45);
+  }
+
+  /* --------- Section spacing (spec: 3-4rem gap) --------- */
+  .section-pad {
+    @apply px-4 md:px-6;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-pad {
+      padding-top: 5.5rem;
+      padding-bottom: 5.5rem;
+    }
+  }
+
+  /* --------- Typography helpers --------- */
+  .h1-ac { font-size: 1.75rem;  font-weight: 600; line-height: 1.25; color: #3D2817; }
+  .h2-ac { font-size: 1.125rem; font-weight: 700; line-height: 1.35; color: #3D2817; }
+  .body-ac  { font-size: 0.875rem; font-weight: 400; line-height: 1.55; color: #3D2817; }
+  .small-ac { font-size: 0.75rem;  font-weight: 300; line-height: 1.45; color: #3D2817; }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: #D4AF37;
+  }
+
+  /* Champagne accent line (decorative) */
+  .accent-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #D4AF37;
+  }
+  .accent-line::before,
+  .accent-line::after {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: #D4AF37;
+    opacity: 0.7;
+  }
+
+  /* Legacy gold text — now solid champagne */
+  .text-gold-gradient,
+  .text-gold-metallic {
+    color: #D4AF37;
+    background: none;
+    -webkit-text-fill-color: currentColor;
+    background-clip: initial;
+    -webkit-background-clip: initial;
+  }
+
+  /* Image placeholder block */
+  .img-placeholder {
+    background: #E8DCC8;
+    border: 1px dashed rgba(212, 175, 55, 0.6);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #5B3E2A;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 2rem;
+  }
+}
+
+/* --------- Animations --------- */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px); }
+  50%      { transform: translateY(-10px); }
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+@keyframes shimmer-gold {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+/* Scrollbar — moka on ivory */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F5F1ED;
+}
+::-webkit-scrollbar-thumb {
+  background: #D4AF37;
+  border-radius: 3px;
+}
+
+/* Selection */
+::selection {
+  background: rgba(212, 175, 55, 0.35);
+  color: #3D2817;
+}

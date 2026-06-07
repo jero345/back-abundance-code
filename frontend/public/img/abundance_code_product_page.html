@@ -1,0 +1,641 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8D5A3;
+    --gold-dark: #8B6914;
+    --cream: #F5F0E8;
+    --dark: #1A1510;
+    --dark-mid: #2C2318;
+    --muted: #7A6E5F;
+    --border: rgba(201,168,76,0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  .product-page {
+    font-family: 'Jost', sans-serif;
+    background: var(--color-background-primary);
+    color: var(--color-text-primary);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .serif { font-family: 'Cormorant Garamond', serif; }
+
+  .eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .divider-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1rem;
+  }
+  .divider-line::before, .divider-line::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: var(--border);
+  }
+  .star { color: var(--gold); font-size: 14px; }
+
+  section { padding: 4rem 2rem; border-bottom: 0.5px solid var(--border); }
+
+  /* HERO */
+  .hero {
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-primary);
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .hero .subtitle {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+    max-width: 540px;
+    margin: 0 auto 2.5rem;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 0.5px solid var(--border);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    margin-bottom: 2rem;
+    background: var(--color-background-secondary);
+  }
+  .hero-badge span { color: var(--gold); font-weight: 500; }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--dark, #1A1510);
+    color: #F5F0E8;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+    margin-right: 12px;
+    margin-bottom: 12px;
+  }
+  .btn-secondary {
+    display: inline-block;
+    background: transparent;
+    color: var(--color-text-primary);
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 15px 32px;
+    border-radius: 100px;
+    border: 0.5px solid var(--color-border-primary);
+    cursor: pointer;
+    margin-bottom: 12px;
+  }
+
+  .price-display {
+    margin: 2rem 0 1rem;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .price-display .price {
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--color-text-primary);
+  }
+  .price-display .price-note {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    font-family: 'Jost', sans-serif;
+    margin-top: 4px;
+  }
+
+  .trust-strip {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+  }
+  .trust-item i { color: var(--gold); font-size: 14px; }
+
+  /* DOLOR */
+  .dolor { text-align: center; background: var(--color-background-secondary); }
+  .dolor h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+  .dolor .body {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--color-text-secondary);
+    line-height: 1.9;
+    max-width: 560px;
+    margin: 0 auto 1.5rem;
+  }
+  .dolor .cierre {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--gold);
+    margin-top: 1.5rem;
+  }
+
+  /* PROMESA */
+  .promesa { text-align: center; }
+  .promesa h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    line-height: 1.3;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+  }
+  .promesa-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    text-align: left;
+  }
+  .promesa-card {
+    padding: 1.75rem;
+    border: 0.5px solid var(--border);
+    border-radius: var(--border-radius-lg);
+    background: var(--color-background-primary);
+  }
+  .promesa-icon {
+    font-size: 22px;
+    margin-bottom: 1rem;
+    color: var(--gold);
+  }
+  .promesa-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+  .promesa-card p {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* PRODUCTO */
+  .producto { background: var(--color-background-secondary); }
+  .producto-header { text-align: center; margin-bottom: 3rem; }
+  .producto-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .producto-header p {
+    font-size: 15px;
+    color: var(--color-text-secondary);
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+  .items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .item-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--border);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .item-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 0.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--gold);
+    font-size: 16px;
+  }
+  .item-text h4 {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .item-text p {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+  .producto-cierre {
+    text-align: center;
+    margin-top: 2.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--color-text-secondary);
+  }
+  .producto-cierre span { color: var(--gold); }
+
+  /* OBJECION */
+  .objecion { text-align: center; }
+  .objecion h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .objecion-box {
+    border: 0.5px solid var(--border);
+    border-radius: var(--border-radius-lg);
+    padding: 2.5rem;
+    text-align: left;
+    max-width: 660px;
+    margin: 0 auto;
+    background: var(--color-background-secondary);
+  }
+  .objecion-box p {
+    font-size: 15px;
+    color: var(--color-text-secondary);
+    line-height: 1.9;
+    margin-bottom: 1rem;
+    font-weight: 300;
+  }
+  .objecion-box .highlight {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--color-text-primary);
+    border-left: 2px solid var(--gold);
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+  }
+  .social-proof {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 0.5px solid var(--border);
+  }
+  .avatars { display: flex; }
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--color-background-primary);
+    background: var(--color-background-tertiary);
+    margin-left: -8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+  }
+  .avatar:first-child { margin-left: 0; }
+  .social-proof p { font-size: 13px; color: var(--color-text-secondary); }
+  .social-proof strong { color: var(--color-text-primary); font-weight: 500; }
+
+  /* TESTIMONIOS */
+  .testimonios { background: var(--color-background-secondary); text-align: center; }
+  .testimonios h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 3rem;
+  }
+  .testimonios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    text-align: left;
+  }
+  .testimonio {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--border);
+    border-radius: var(--border-radius-lg);
+    padding: 1.75rem;
+  }
+  .testimonio .stars {
+    color: var(--gold);
+    font-size: 13px;
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+  }
+  .testimonio blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--color-text-primary);
+    margin-bottom: 1.25rem;
+    font-weight: 300;
+  }
+  .testimonio .autor {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* CTA FINAL */
+  .cta-final {
+    text-align: center;
+    padding: 5rem 2rem;
+    border-bottom: none;
+  }
+  .cta-final h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px;
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .cta-final .sub {
+    font-size: 15px;
+    color: var(--color-text-secondary);
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+  .price-box {
+    display: inline-block;
+    border: 0.5px solid var(--border);
+    border-radius: var(--border-radius-lg);
+    padding: 2rem 3rem;
+    margin-bottom: 2rem;
+    background: var(--color-background-secondary);
+  }
+  .price-box .main-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 300;
+    color: var(--color-text-primary);
+    line-height: 1;
+  }
+  .price-box .price-label {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    margin-top: 4px;
+    letter-spacing: 0.05em;
+  }
+  .garantia {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin-top: 1.5rem;
+    font-weight: 300;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+  }
+  .frase-final {
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 0.5px solid var(--border);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .frase-final strong {
+    display: block;
+    color: var(--gold);
+    font-weight: 300;
+    margin-top: 0.5rem;
+  }
+</style>
+
+<div class="product-page">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">
+      <i class="ti ti-users" aria-hidden="true"></i>
+      <span>+2.400 personas</span> ya activaron su portal
+    </div>
+    <div class="eyebrow">Tu código de abundancia ya existe</div>
+    <h1 class="serif">No estás bloqueada<br>por mala suerte.<br><em>Estás bloqueada por un patrón.</em></h1>
+    <p class="subtitle">Abundance Code traduce tu carta natal en un portal personal que identifica exactamente qué está frenando tu dinero, tu amor y tu expansión — y te guía cada día para desbloquearlo.</p>
+    <div class="price-display">
+      <div class="price serif">$147 USD</div>
+      <div class="price-note">Esfera física + portal digital + acceso premium incluido</div>
+    </div>
+    <div style="margin-top: 1.5rem;">
+      <button class="btn-primary">Descubrir mi código</button>
+      <button class="btn-secondary">Ver qué incluye ↓</button>
+    </div>
+    <div class="trust-strip">
+      <div class="trust-item"><i class="ti ti-shield-check" aria-hidden="true"></i> Garantía 15 días</div>
+      <div class="trust-item"><i class="ti ti-world" aria-hidden="true"></i> Envío internacional</div>
+      <div class="trust-item"><i class="ti ti-lock" aria-hidden="true"></i> Pago seguro</div>
+    </div>
+  </section>
+
+  <!-- DOLOR -->
+  <section class="dolor">
+    <div class="divider-line"><span class="star">✦</span></div>
+    <div class="eyebrow">Si algo de esto te suena familiar</div>
+    <h2 class="serif">Llevas años haciendo todo bien.<br>Y algo sigue sin moverse.</h2>
+    <p class="body">Afirmas. Manifiestas. Trabajas duro. Cambias hábitos.<br>Pero el dinero llega y desaparece. Las relaciones se repiten.<br>La sensación de que <em>deberías</em> estar más lejos de donde estás no se va.</p>
+    <p class="body">No es que no seas suficiente.<br>Es que nadie te ha mostrado el mapa.</p>
+    <p class="cierre">Tu carta natal tiene ese mapa. Abundance Code lo traduce.</p>
+  </section>
+
+  <!-- PROMESA -->
+  <section class="promesa">
+    <div class="eyebrow">Lo que cambia cuando entiendes tu patrón</div>
+    <h2 class="serif">Imagina saber exactamente por qué el dinero no se queda — y qué hacer para que cambie.</h2>
+    <div class="promesa-grid">
+      <div class="promesa-card">
+        <div class="promesa-icon"><i class="ti ti-coin" aria-hidden="true"></i></div>
+        <h3 class="serif">Claridad sobre tu dinero</h3>
+        <p>Descubres qué patrón inconsciente ha estado saboteando tu abundancia económica — y cómo romperlo.</p>
+      </div>
+      <div class="promesa-card">
+        <div class="promesa-icon"><i class="ti ti-heart" aria-hidden="true"></i></div>
+        <h3 class="serif">Claridad sobre tus relaciones</h3>
+        <p>Entiendes por qué repites los mismos vínculos y qué necesitas sanar para atraer lo que realmente mereces.</p>
+      </div>
+      <div class="promesa-card">
+        <div class="promesa-icon"><i class="ti ti-compass" aria-hidden="true"></i></div>
+        <h3 class="serif">Claridad sobre tu dirección</h3>
+        <p>Dejas de dudar. Sabes en qué ciclo estás, qué está a tu favor y cuándo actuar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTO -->
+  <section class="producto">
+    <div class="producto-header">
+      <div class="eyebrow">Lo que recibes en tu caja</div>
+      <h2 class="serif">Una caja que no se parece<br>a nada que hayas recibido antes.</h2>
+      <p>Esto no es un libro de autoayuda. No es un curso en línea. Es un objeto físico con tu energía — y un portal digital que evoluciona contigo cada día.</p>
+    </div>
+    <div class="items-grid">
+      <div class="item-card">
+        <div class="item-icon"><i class="ti ti-crystal-ball" aria-hidden="true"></i></div>
+        <div class="item-text">
+          <h4>Esfera de cristal grabada</h4>
+          <p>El símbolo de Abundance Code en cristal. Un recordatorio físico de tu código todos los días.</p>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-icon"><i class="ti ti-bulb" aria-hidden="true"></i></div>
+        <div class="item-text">
+          <h4>Base premium iluminada</h4>
+          <p>Diseñada para que tu esfera sea lo primero que ves cada mañana. La intención comienza con lo que ves.</p>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-icon"><i class="ti ti-credit-card" aria-hidden="true"></i></div>
+        <div class="item-text">
+          <h4>Tarjeta de activación personal</h4>
+          <p>Tu código único. La llave que desbloquea todo lo que el sistema creó solo para ti.</p>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-icon"><i class="ti ti-lock-open" aria-hidden="true"></i></div>
+        <div class="item-text">
+          <h4>Acceso a tu portal privado</h4>
+          <p>Tu carta natal se convierte en guía diaria. No es estático — evoluciona contigo.</p>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-icon"><i class="ti ti-stars" aria-hidden="true"></i></div>
+        <div class="item-text">
+          <h4>Interpretación profunda</h4>
+          <p>No signos genéricos. Tu Sol, Luna y Ascendente explicados en términos de dinero, amor y propósito.</p>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-icon"><i class="ti ti-crown" aria-hidden="true"></i></div>
+        <div class="item-text">
+          <h4>Acceso premium inicial incluido</h4>
+          <p>Todo desbloqueado desde el primer día. Sin cargos adicionales ocultos.</p>
+        </div>
+      </div>
+    </div>
+    <p class="producto-cierre">La experiencia comienza desde el momento en que <span>abres la caja.</span></p>
+  </section>
+
+  <!-- OBJECION -->
+  <section class="objecion">
+    <div class="eyebrow">La pregunta que probablemente tienes</div>
+    <h2 class="serif">"¿Esto realmente funciona<br>o es solo astrología?"</h2>
+    <div class="objecion-box">
+      <p>Es una pregunta válida. Y merece una respuesta honesta.</p>
+      <p>Abundance Code no te dice que Mercurio retrógrado arruinó tu semana. Eso es astrología genérica.</p>
+      <div class="highlight serif">Lo que hace Abundance Code es diferente: toma los datos exactos de tu nacimiento y construye un mapa de los patrones que determinan cómo te relacionas con el dinero, el amor y las decisiones difíciles.</div>
+      <p>¿Puedes ignorar esos patrones? Sí.<br>¿Desaparecen solos? No. Llevas años comprobándolo.</p>
+      <div class="social-proof">
+        <div class="avatars">
+          <div class="avatar">VR</div>
+          <div class="avatar">MS</div>
+          <div class="avatar">LG</div>
+          <div class="avatar">+</div>
+        </div>
+        <p><strong>+2.400 personas</strong> ya activaron su portal. No por creer ciegamente en los astros — sino porque por primera vez tuvieron un espejo claro de por qué su vida se repite.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS -->
+  <section class="testimonios">
+    <div class="eyebrow">Lo que pasa cuando activas tu código</div>
+    <h2 class="serif">Palabras de quienes ya lo viven</h2>
+    <div class="testimonios-grid">
+      <div class="testimonio">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Llevaba 3 años ganando bien pero sin poder ahorrar. Cuando vi mi patrón central entendí exactamente por qué. En 60 días cambié algo pequeño y mi relación con el dinero cambió completamente."</blockquote>
+        <div class="autor">Valentina R. — Colombia</div>
+      </div>
+      <div class="testimonio">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Siempre repetía el mismo tipo de relación. Me pareció increíble ver escrito en mi portal el patrón exacto que seguía. Por primera vez sentí que no estaba loca — que tenía sentido."</blockquote>
+        <div class="autor">María S. — México</div>
+      </div>
+      <div class="testimonio">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Era escéptica. Pero la precisión con la que describió mis bloqueos me dejó sin palabras. Es el primer sistema que siento que fue hecho para mí, no para todos."</blockquote>
+        <div class="autor">Laura G. — España</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-final">
+    <div class="eyebrow">Tu portal te espera</div>
+    <h2 class="serif">Un objeto para toda la vida.<br>Un portal que crece contigo.</h2>
+    <p class="sub">Todo lo que está bloqueado en tu vida tiene un patrón. Este es el primer paso para moverlo.</p>
+    <div class="price-box">
+      <div class="main-price serif">$147 USD</div>
+      <div class="price-label">Esfera física · Portal personal · Acceso premium · Envío incluido</div>
+    </div>
+    <div>
+      <button class="btn-primary" style="font-size:13px; padding:18px 44px;">Activar mi esfera ahora</button>
+    </div>
+    <p class="garantia">Si en 15 días sientes que no fue para ti, te devolvemos el dinero. Sin preguntas. Porque estamos seguros de lo que este portal hace cuando se le da una oportunidad real.</p>
+    <div class="frase-final serif">
+      No viniste hasta aquí por casualidad.<br>Tu patrón ya está listo para ser leído.
+      <strong>La pregunta es si estás lista para verlo. ✦</strong>
+    </div>
+  </section>
+
+</div>
