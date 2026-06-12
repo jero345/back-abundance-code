@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useLang } from '../context/LanguageContext.jsx';
 import { TestimonialCards } from '../components/sections/Testimonials.jsx';
+import AnimatedSphere from '../components/bits/AnimatedSphere.jsx';
 
 /* =========================================================
    ABUNDANCE CODE — Product page
@@ -97,24 +98,10 @@ export default function Product() {
               </motion.div>
             </div>
 
-            {/* Right 60% — sphere hyper-real (solo la esfera) */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.94 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.9, delay: 0.2 }}
-              className="md:col-span-3 flex justify-center"
-            >
-              <img
-                src="/img/sphere-transparent.png"
-                alt="Esfera de cristal Abundance Code"
-                width={560}
-                height={560}
-                loading="eager"
-                decoding="async"
-                className="block w-full h-auto"
-                style={{ maxWidth: 560 }}
-              />
-            </motion.div>
+            {/* Right 60% — animated sphere (hyper-real, solo la esfera) */}
+            <div className="md:col-span-3 flex justify-center">
+              <AnimatedSphere size={560} priority />
+            </div>
           </div>
         </div>
       </section>

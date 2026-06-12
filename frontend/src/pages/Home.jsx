@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useLang } from '../context/LanguageContext.jsx';
 import { TestimonialBar, TestimonialCards } from '../components/sections/Testimonials.jsx';
+import AnimatedSphere from '../components/bits/AnimatedSphere.jsx';
 
 /* =========================================================
    ABUNDANCE CODE — Home
@@ -258,17 +259,15 @@ export default function Home() {
               </motion.div>
             </div>
 
-            {/* Right — sphere over dashboard backdrop */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.9, delay: 0.2 }}
-              className="relative flex justify-center items-center"
-            >
+            {/* Right — animated sphere over dashboard backdrop */}
+            <div className="relative flex justify-center items-center">
               {/* Dashboard backdrop (blurred, low-opacity) */}
-              <div
+              <motion.div
                 className="absolute inset-0 flex items-center justify-center pointer-events-none"
-                style={{ filter: 'blur(1.5px)', opacity: 0.55 }}
+                style={{ filter: 'blur(1.5px)', opacity: 0.5 }}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 0.5, x: 0 }}
+                transition={{ duration: 1, delay: 0.4 }}
                 aria-hidden="true"
               >
                 <img
@@ -280,12 +279,12 @@ export default function Home() {
                     boxShadow: '0 30px 80px rgba(61,40,23,0.18)',
                   }}
                 />
+              </motion.div>
+              {/* Sphere foreground — premium animation */}
+              <div className="relative z-10 w-full flex justify-center">
+                <AnimatedSphere size={440} priority />
               </div>
-              {/* Sphere foreground */}
-              <div className="relative z-10">
-                <SphereImage size={440} priority />
-              </div>
-            </motion.div>
+            </div>
           </div>
 
           {/* Testimonial carousel bar */}
