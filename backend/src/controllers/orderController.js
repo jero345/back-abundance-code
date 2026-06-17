@@ -3,13 +3,14 @@ import {
   findOrdersByUser,
   updateOrder,
 } from '../data/orders.js';
+import { mapOrder } from '../lib/responseMappers.js';
 
 // GET /api/orders/:sessionId — public, used by confirmation page
 export const getOrderBySession = async (req, res, next) => {
   try {
     const order = await findOrderBySession(req.params.sessionId);
     if (!order) return res.status(404).json({ message: 'Order not found' });
-    res.json(order);
+    res.json(mapOrder(order));
   } catch (err) {
     next(err);
   }
@@ -19,7 +20,7 @@ export const getOrderBySession = async (req, res, next) => {
 export const getMyOrders = async (req, res, next) => {
   try {
     const orders = await findOrdersByUser(req.user.id);
-    res.json(orders);
+    res.json(orders.map(mapOrder));
   } catch (err) {
     next(err);
   }
@@ -35,7 +36,7 @@ export const updateTracking = async (req, res, next) => {
       shipped_at: new Date().toISOString(),
     });
     if (!order) return res.status(404).json({ message: 'Order not found' });
-    res.json(order);
+    res.json(mapOrder(order));
   } catch (err) {
     next(err);
   }

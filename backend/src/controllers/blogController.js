@@ -1,4 +1,5 @@
 import * as Blog from '../data/blogPosts.js';
+import { mapBlogPost } from '../lib/responseMappers.js';
 
 /* ── PUBLIC ──────────────────────────────────────────────────────────────── */
 
@@ -10,7 +11,7 @@ export const getPosts = async (req, res, next) => {
     const category = req.query.category;
 
     const result = await Blog.listPublished({ category, page, limit });
-    res.json(result);
+    res.json({ ...result, posts: (result.posts || []).map(mapBlogPost) });
   } catch (err) { next(err); }
 };
 
@@ -19,7 +20,7 @@ export const getPostBySlug = async (req, res, next) => {
   try {
     const post = await Blog.findPublishedBySlug(req.params.slug);
     if (!post) return res.status(404).json({ message: 'Post not found' });
-    res.json(post);
+    res.json(mapBlogPost(post));
   } catch (err) { next(err); }
 };
 
@@ -31,7 +32,7 @@ export const adminGetPosts = async (req, res, next) => {
     const page  = Math.max(1, parseInt(req.query.page)  || 1);
     const limit = Math.min(50, parseInt(req.query.limit) || 20);
     const result = await Blog.listAll({ page, limit });
-    res.json(result);
+    res.json({ ...result, posts: (result.posts || []).map(mapBlogPost) });
   } catch (err) { next(err); }
 };
 
@@ -40,7 +41,7 @@ export const adminGetPost = async (req, res, next) => {
   try {
     const post = await Blog.findById(req.params.id);
     if (!post) return res.status(404).json({ message: 'Post not found' });
-    res.json(post);
+    res.json(mapBlogPost(post));
   } catch (err) { next(err); }
 };
 
@@ -58,7 +59,7 @@ export const adminCreatePost = async (req, res, next) => {
       category,
       is_published: !!isPublished,
     });
-    res.status(201).json(post);
+    res.status(201).json(mapBlogPost(post));
   } catch (err) { next(err); }
 };
 
@@ -82,7 +83,7 @@ export const adminUpdatePost = async (req, res, next) => {
 
     const post = await Blog.update(req.params.id, patch);
     if (!post) return res.status(404).json({ message: 'Post not found' });
-    res.json(post);
+    res.json(mapBlogPost(post));
   } catch (err) { next(err); }
 };
 

@@ -5,6 +5,7 @@ import {
   getOrderStats,
 } from '../data/orders.js';
 import { listProfiles } from '../data/profiles.js';
+import { mapOrder, mapProfile } from '../lib/responseMappers.js';
 
 // GET /api/admin/orders
 export const getOrders = async (req, res, next) => {
@@ -16,7 +17,10 @@ export const getOrders = async (req, res, next) => {
       page:  Number(page),
       limit: Number(limit),
     });
-    res.json(result);
+    res.json({
+      ...result,
+      orders: (result.orders || []).map(mapOrder),
+    });
   } catch (err) { next(err); }
 };
 
@@ -25,7 +29,7 @@ export const getOrderById = async (req, res, next) => {
   try {
     const order = await findOrderById(req.params.id);
     if (!order) return res.status(404).json({ message: 'Order not found' });
-    res.json(order);
+    res.json(mapOrder(order));
   } catch (err) { next(err); }
 };
 
@@ -49,7 +53,7 @@ export const updateOrderCtrl = async (req, res, next) => {
 
     const order = await updateOrder(req.params.id, patch);
     if (!order) return res.status(404).json({ message: 'Order not found' });
-    res.json(order);
+    res.json(mapOrder(order));
   } catch (err) { next(err); }
 };
 
@@ -57,10 +61,7 @@ export const updateOrderCtrl = async (req, res, next) => {
 export const getStats = async (req, res, next) => {
   try {
     const stats = await getOrderStats();
-
-    // user count (non-admins) — listProfiles returns totals
     const { total: totalUsers } = await listProfiles({ page: 1, limit: 1 });
-
     res.json({ ...stats, totalUsers });
   } catch (err) { next(err); }
 };
@@ -74,6 +75,9 @@ export const getUsers = async (req, res, next) => {
       page:  Number(page),
       limit: Number(limit),
     });
-    res.json(result);
+    res.json({
+      ...result,
+      users: (result.users || []).map(mapProfile),
+    });
   } catch (err) { next(err); }
 };

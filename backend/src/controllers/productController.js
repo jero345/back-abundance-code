@@ -1,10 +1,11 @@
 import * as Products from '../data/products.js';
+import { mapProduct } from '../lib/responseMappers.js';
 
 // GET /api/admin/products
 export const getProducts = async (req, res, next) => {
   try {
     const products = await Products.listProducts();
-    res.json({ products });
+    res.json({ products: products.map(mapProduct) });
   } catch (err) { next(err); }
 };
 
@@ -20,7 +21,7 @@ export const createProduct = async (req, res, next) => {
       is_active:   isActive !== false,
       slug,
     });
-    res.status(201).json(product);
+    res.status(201).json(mapProduct(product));
   } catch (err) { next(err); }
 };
 
@@ -38,7 +39,7 @@ export const updateProduct = async (req, res, next) => {
 
     const product = await Products.updateProduct(req.params.id, patch);
     if (!product) return res.status(404).json({ message: 'Product not found' });
-    res.json(product);
+    res.json(mapProduct(product));
   } catch (err) { next(err); }
 };
 
