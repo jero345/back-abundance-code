@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { buildAccessUrl } from './accessService.js';
 
 const createTransporter = () =>
   nodemailer.createTransport({
@@ -8,48 +9,128 @@ const createTransporter = () =>
     auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
   });
 
-export const sendOrderConfirmationEmail = async (order) => {
-  if (!process.env.SMTP_USER) return; // Skip in dev if not configured
+/* Paleta de la marca — la misma que usa la web. */
+const IVORY     = '#F5F1ED';
+const CARD      = '#FFFDF7';
+const BEIGE     = '#E8DCC8';
+const CHAMPAGNE = '#D4AF37';
+const MOKA      = '#3D2817';
+const MUTED     = '#5B3E2A';
 
-  const transporter = createTransporter();
+/* =============================================================================
+ *  Correo de acceso
+ *
+ *  Es la red de seguridad: quien paga vuelve a la app directamente desde
+ *  Stripe, así que este correo es para quien cerró la pestaña. El enlace lleva
+ *  el token dentro, de modo que la cuenta queda vinculada al correo que pagó
+ *  sin que el usuario tenga que acordarse de nada.
+ * ============================================================================*/
+export const sendAccessEmail = async (subscription) => {
+  if (!process.env.SMTP_USER) {
+    console.log('[Email] SMTP sin configurar — se omite el correo de acceso');
+    return;
+  }
 
-  await transporter.sendMail({
+  const url  = buildAccessUrl(subscription.access_token);
+  const name = subscription.name ? `, ${subscription.name}` : '';
+
+  await createTransporter().sendMail({
     from: `"Abundance Code" <${process.env.EMAIL_FROM}>`,
-    to: order.email,
-    subject: 'Your Abundance Code Sphere is on its way ✨',
+    to: subscription.email,
+    subject: 'Tu acceso a Abundance Code está listo ✦',
     html: `
-      <div style="font-family: Inter, sans-serif; background: #0B0B0B; color: #fff; padding: 40px; max-width: 600px; margin: 0 auto;">
-        <h1 style="color: #D4AF37; font-size: 28px;">Your sphere is on its way.</h1>
-        <p style="color: #ccc; font-size: 16px;">Hi ${order.name || 'there'},</p>
-        <p style="color: #ccc;">Thank you for your order. Your <strong>Abundance Code Sphere</strong> will arrive within 7–14 business days.</p>
+      <div style="font-family: Montserrat, Helvetica, Arial, sans-serif; background:${IVORY}; padding:40px 20px;">
+        <div style="max-width:560px; margin:0 auto; background:${CARD}; border:1px solid ${BEIGE}; border-radius:16px; padding:40px;">
 
-        <div style="background: #1a1a1a; border: 1px solid #D4AF37; border-radius: 12px; padding: 24px; margin: 24px 0;">
-          <p style="color: #D4AF37; margin: 0 0 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 2px;">Your Activation Code</p>
-          <p style="color: #fff; font-size: 28px; font-weight: bold; margin: 0; letter-spacing: 4px;">${order.activationCode}</p>
+          <p style="color:${CHAMPAGNE}; font-size:11px; letter-spacing:3px; text-transform:uppercase; margin:0 0 20px;">
+            Tu portal está abierto
+          </p>
+
+          <h1 style="color:${MOKA}; font-size:24px; line-height:1.3; margin:0 0 20px; font-weight:600;">
+            Bienvenida${name}.
+          </h1>
+
+          <p style="color:${MOKA}; font-size:15px; line-height:1.6; margin:0 0 12px;">
+            Tu suscripción está activa. Con este botón entras a tu portal y creas tu cuenta
+            — ya queda vinculada a este mismo correo, no tienes que hacer nada más.
+          </p>
+
+          <p style="color:${MUTED}; font-size:14px; line-height:1.6; margin:0 0 28px;">
+            Dentro te pedimos tu fecha, hora y lugar de nacimiento. Con eso calculamos
+            tu carta natal y en minutos tienes tu primera lectura.
+          </p>
+
+          <div style="text-align:center; margin:0 0 28px;">
+            <a href="${url}"
+               style="display:inline-block; background:${MOKA}; color:${IVORY}; padding:16px 36px;
+                      border-radius:999px; text-decoration:none; font-weight:600; font-size:14px;
+                      letter-spacing:0.06em;">
+              ENTRAR A MI PORTAL
+            </a>
+          </div>
+
+          <p style="color:${MUTED}; font-size:12px; line-height:1.6; margin:0 0 24px; text-align:center;">
+            Si el botón no funciona, copia y pega este enlace:<br>
+            <span style="color:${MOKA}; word-break:break-all;">${url}</span>
+          </p>
+
+          ${subscription.access_code ? `
+          <div style="background:${BEIGE}; border-radius:12px; padding:18px; text-align:center; margin:0 0 24px;">
+            <p style="color:${MUTED}; font-size:10px; letter-spacing:2px; text-transform:uppercase; margin:0 0 6px;">
+              Código de respaldo
+            </p>
+            <p style="color:${MOKA}; font-size:20px; font-weight:700; letter-spacing:3px; margin:0;">
+              ${subscription.access_code}
+            </p>
+          </div>` : ''}
+
+          <div style="border-top:1px solid ${BEIGE}; padding-top:20px; margin-top:8px;">
+            <p style="color:${MUTED}; font-size:12px; line-height:1.6; margin:0;">
+              Este enlace es personal y caduca en 30 días. Si lo pierdes, pide uno nuevo en
+              <a href="${process.env.FRONTEND_URL}/activar-acceso" style="color:${CHAMPAGNE};">
+                ${(process.env.FRONTEND_URL || '').replace(/^https?:\/\//, '')}/activar-acceso
+              </a>.
+            </p>
+          </div>
         </div>
 
-        <p style="color: #ccc;">Once you receive your sphere, visit <strong>abundancecode.com/activate</strong> and enter this code to create your personal energy profile.</p>
-
-        <p style="color: #888; font-size: 14px; margin-top: 40px;">Order ID: ${order._id}</p>
+        <p style="text-align:center; color:${MUTED}; font-size:11px; margin:24px 0 0;">
+          Abundance Code · Puedes cancelar tu suscripción cuando quieras desde tu cuenta.
+        </p>
       </div>
     `,
   });
 };
 
-export const sendActivationEmail = async (user) => {
+/* Recordatorio para quien pagó y nunca llegó a entrar. */
+export const sendAccessReminderEmail = async (subscription) => {
   if (!process.env.SMTP_USER) return;
 
-  const transporter = createTransporter();
+  const url = buildAccessUrl(subscription.access_token);
 
-  await transporter.sendMail({
+  await createTransporter().sendMail({
     from: `"Abundance Code" <${process.env.EMAIL_FROM}>`,
-    to: user.email,
-    subject: 'Your portal is now active — Day 1 begins',
+    to: subscription.email,
+    subject: 'Tu carta natal sigue esperándote ✦',
     html: `
-      <div style="font-family: Inter, sans-serif; background: #0B0B0B; color: #fff; padding: 40px; max-width: 600px; margin: 0 auto;">
-        <h1 style="color: #D4AF37;">Welcome to your portal, ${user.name || ''}.</h1>
-        <p style="color: #ccc;">Your 30-day discovery period has begun. Each day you will receive a personal activation based on your natal chart and planetary cycles.</p>
-        <a href="${process.env.FRONTEND_URL}/portal" style="display: inline-block; background: #D4AF37; color: #0B0B0B; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 16px;">Access your portal</a>
+      <div style="font-family: Montserrat, Helvetica, Arial, sans-serif; background:${IVORY}; padding:40px 20px;">
+        <div style="max-width:560px; margin:0 auto; background:${CARD}; border:1px solid ${BEIGE}; border-radius:16px; padding:40px;">
+          <h1 style="color:${MOKA}; font-size:22px; line-height:1.3; margin:0 0 16px; font-weight:600;">
+            Tu portal está pagado y sin abrir.
+          </h1>
+          <p style="color:${MOKA}; font-size:15px; line-height:1.6; margin:0 0 28px;">
+            Todavía no has creado tu cuenta, así que tu carta natal sigue sin calcularse.
+            Son dos minutos y este enlace lo deja todo listo.
+          </p>
+          <div style="text-align:center;">
+            <a href="${url}"
+               style="display:inline-block; background:${MOKA}; color:${IVORY}; padding:16px 36px;
+                      border-radius:999px; text-decoration:none; font-weight:600; font-size:14px;
+                      letter-spacing:0.06em;">
+              ENTRAR A MI PORTAL
+            </a>
+          </div>
+        </div>
       </div>
     `,
   });
