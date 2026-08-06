@@ -1,10 +1,10 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import StarField from '../components/bits/StarField.jsx';
 import { useLang } from '../context/LanguageContext.jsx';
 
-const API = import.meta.env.VITE_API_URL || '/api';
+const API = (import.meta.env.VITE_API_URL || '') + '/api';
 
 const metalStyle = {
   background: 'linear-gradient(180deg, #E6C76A 0%, #D4AF37 40%, #C9A227 70%, #E6C76A 100%)',
@@ -83,7 +83,7 @@ export default function BlogPostPage() {
         {/* Divider */}
         <div className="flex items-center gap-4 mb-10 opacity-25">
           <div className="flex-1 h-px bg-[#D4AF37]" />
-          <span className="text-[#D4AF37] text-xs">âœ¦</span>
+          <span className="text-[#D4AF37] text-xs">✦</span>
           <div className="flex-1 h-px bg-[#D4AF37]" />
         </div>
 

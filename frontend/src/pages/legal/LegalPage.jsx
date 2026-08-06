@@ -13,9 +13,11 @@ export default function LegalPage({ title, updated, children }) {
           {updated && <p className="text-[#5B3E2A]/65 text-sm mb-10">Last updated: {updated}</p>}
           <div className="prose-legal space-y-6 text-[#3D2817]/90 leading-relaxed">
             <style>{`
-              .prose-legal h2 { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: rgba(255,255,255,0.9); margin-top: 2rem; margin-bottom: 0.5rem; }
+              .prose-legal h2 { font-size: 1.25rem; font-weight: 600; color: #3D2817; margin-top: 2rem; margin-bottom: 0.5rem; }
+              .prose-legal h3 { font-size: 1rem; font-weight: 600; color: #3D2817; margin-top: 1.5rem; margin-bottom: 0.4rem; }
               .prose-legal p { margin-bottom: 1rem; }
-              .prose-legal ul { list-style: disc; padding-left: 1.5rem; space-y: 0.5rem; }
+              .prose-legal ul { list-style: disc; padding-left: 1.5rem; }
+              .prose-legal li { margin-bottom: 0.5rem; }
             `}</style>
             {children}
           </div>

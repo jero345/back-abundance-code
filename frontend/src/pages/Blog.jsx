@@ -1,10 +1,10 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import StarField from '../components/bits/StarField.jsx';
 import { useLang } from '../context/LanguageContext.jsx';
 
-const API = import.meta.env.VITE_API_URL || '/api';
+const API = (import.meta.env.VITE_API_URL || '') + '/api';
 
 const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } };
 
@@ -43,7 +43,7 @@ function PostCard({ post, featured = false }) {
           ) : (
             <div className="w-full h-full flex items-center justify-center"
               style={{ background: 'radial-gradient(circle at 40% 40%, rgba(96,64,160,0.3) 0%, rgba(212,175,55,0.05) 60%, transparent 100%)' }}>
-              <span className="text-5xl opacity-30">âœ¦</span>
+              <span className="text-5xl opacity-30">✦</span>
             </div>
           )}
           {/* Overlay on hover */}
@@ -129,7 +129,7 @@ export default function Blog() {
           </motion.p>
           <motion.div variants={fadeUp} className="flex items-center gap-4 justify-center mt-6 opacity-30">
             <div className="flex-1 max-w-[120px] h-px bg-gradient-to-r from-transparent to-[#D4AF37]" />
-            <span className="text-[#D4AF37] text-sm">âœ¦</span>
+            <span className="text-[#D4AF37] text-sm">✦</span>
             <div className="flex-1 max-w-[120px] h-px bg-gradient-to-l from-transparent to-[#D4AF37]" />
           </motion.div>
         </motion.div>
@@ -164,7 +164,7 @@ export default function Blog() {
             {rest.length > 0 && (
               <div className="flex items-center gap-4 my-10 opacity-20">
                 <div className="flex-1 h-px bg-[#D4AF37]" />
-                <span className="text-[#D4AF37] text-xs tracking-widest">âœ¦ âœ¦ âœ¦</span>
+                <span className="text-[#D4AF37] text-xs tracking-widest">✦ ✦ ✦</span>
                 <div className="flex-1 h-px bg-[#D4AF37]" />
               </div>
             )}

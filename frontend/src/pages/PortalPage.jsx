@@ -1,4 +1,4 @@
-﻿import { motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Zap, Clock, Star, Compass } from 'lucide-react';
 import StarField from '../components/bits/StarField.jsx';
@@ -6,6 +6,8 @@ import ProsperityTree from '../components/bits/ProsperityTree.jsx';
 import SpotlightCard from '../components/bits/SpotlightCard.jsx';
 import Aurora from '../components/bits/Aurora.jsx';
 import { useLang } from '../context/LanguageContext.jsx';
+import StartCta from '../components/ui/StartCta.jsx';
+import SectionImage from '../components/ui/SectionImage.jsx';
 
 const fadeUp = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } };
 
@@ -43,13 +45,26 @@ export default function PortalPage() {
             {t('portal.subtitle')}
           </motion.p>
           <motion.div variants={fadeUp} className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/checkout" className="btn-gold text-base px-10">
+            <StartCta campaign="app-page-hero" className="text-base px-10">
               {t('portal.cta')}
-            </Link>
+            </StartCta>
           </motion.div>
           <motion.p variants={fadeUp} className="mt-3 text-[#5B3E2A]/55 text-sm font-sans">
             {t('portal.instant')}
           </motion.p>
+
+          {/* La cabecera dejaba un vacío muy grande antes del primer bloque.
+              Ancho contenido: la imagen es cuadrada y a todo lo ancho
+              empujaría el resto de la página fuera de la primera pantalla. */}
+          <motion.div variants={fadeUp} className="mt-12 max-w-xl mx-auto">
+            <SectionImage
+              src="/img/app-hero-woman.webp"
+              alt={t('portal.img.hero')}
+              width={1000}
+              height={1000}
+              priority
+            />
+          </motion.div>
         </motion.div>
 
         {/* Central symbol + mockup */}
@@ -85,11 +100,11 @@ export default function PortalPage() {
               </div>
               <div className="space-y-3">
                 <div className="card-gold rounded-xl p-3">
-                  <p className="text-[10px] font-sans mb-1" style={metalStyle}>Jupiter â€“ House 2</p>
+                  <p className="text-[10px] font-sans mb-1" style={metalStyle}>Jupiter – House 2</p>
                   <p className="text-[#3D2817]/90 text-sm font-sans">Financial expansion energy</p>
                 </div>
                 <div className="bg-white/3 rounded-xl p-3 text-center">
-                  <p className="text-[#5B3E2A]/70 text-xs font-sans">Peak window Â· 08:00â€“10:00</p>
+                  <p className="text-[#5B3E2A]/70 text-xs font-sans">Peak window · 08:00–10:00</p>
                 </div>
                 <div className="bg-white/3 rounded-xl p-3">
                   <p className="text-[#3D2817]/75 text-xs font-sans leading-relaxed">Trust the patterns unfolding around you today.</p>
@@ -137,30 +152,34 @@ export default function PortalPage() {
           </div>
         </motion.div>
 
-        {/* Upsell â€” amplify */}
+        {/* Banda de cierre antes del último CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="card-gold rounded-3xl p-10 text-center mb-16"
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7 }}
+          className="mb-16"
         >
-          <p className="text-[10px] uppercase tracking-[0.3em] font-sans font-medium mb-3" style={metalStyle}>{t('portal.deeper')}</p>
-          <h3 className="font-serif text-2xl md:text-3xl mb-3">{t('portal.amplify')}</h3>
-          <p className="text-[#3D2817]/80 font-sans text-sm mb-6 max-w-md mx-auto">
-            {t('portal.amplifyP')}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/abundance-code-sphere" className="btn-ghost text-sm">{t('portal.sphereCta')}</Link>
-            <Link to="/bracelet" className="btn-ghost text-sm">{t('portal.braceletCta')}</Link>
-          </div>
+          <SectionImage
+            src="/img/lifestyle-lounge-wide.webp"
+            alt={t('h.img.lounge')}
+            width={1254}
+            height={501}
+            className="aspect-[1254/501]"
+          />
         </motion.div>
 
         {/* Final CTA */}
         <div className="text-center">
-          <Link to="/checkout" className="btn-gold text-base px-12 py-5">
+          <StartCta campaign="app-page-final" className="text-base px-12 py-5">
             {t('portal.finalCta')}
-          </Link>
+          </StartCta>
           <p className="text-[#5B3E2A]/55 text-sm mt-4 font-sans">{t('portal.finalSub')}</p>
+          <p className="mt-6 text-sm">
+            <Link to="/pricing" className="text-[#5B3E2A] underline underline-offset-4 hover:text-[#3D2817] transition-colors font-sans">
+              {t('portal.pricingLink')}
+            </Link>
+          </p>
         </div>
       </div>
     </main>

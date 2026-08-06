@@ -1,7 +1,7 @@
 ﻿import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import StarField from '../components/bits/StarField.jsx';
 import { useLang } from '../context/LanguageContext.jsx';
+import StartCta from '../components/ui/StartCta.jsx';
 
 const fadeUp = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } };
 
@@ -63,9 +63,9 @@ export default function HowItWorks() {
           viewport={{ once: true }}
           className="text-center mt-16"
         >
-          <Link to="/abundance-code-sphere" className="btn-gold text-base">
+          <StartCta campaign="how-it-works-page" className="text-base">
             {t('hiw.cta')}
-          </Link>
+          </StartCta>
         </motion.div>
       </div>
     </main>

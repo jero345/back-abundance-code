@@ -38,7 +38,7 @@ export default function Contact() {
             className="space-y-6"
           >
             {[
-              { icon: <Mail size={18} />, label: t('contact.email'), val: 'support@abundancecode.com' },
+              { icon: <Mail size={18} />, label: t('contact.email'), val: 'support@abundacecode.com' },
               { icon: <Clock size={18} />, label: t('contact.response'), val: t('contact.responseVal') },
               { icon: <MessageCircle size={18} />, label: t('contact.hours'), val: t('contact.hoursVal') },
             ].map(({ icon, label, val }) => (

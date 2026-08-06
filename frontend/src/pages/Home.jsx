@@ -2,22 +2,26 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useLang } from '../context/LanguageContext.jsx';
 import { TestimonialBar, TestimonialCards } from '../components/sections/Testimonials.jsx';
-import AnimatedSphere from '../components/bits/AnimatedSphere.jsx';
+import StartCta from '../components/ui/StartCta.jsx';
+import AppScreenshot from '../components/ui/AppScreenshot.jsx';
+import SectionImage from '../components/ui/SectionImage.jsx';
+import { INCLUDED_DAYS, PRICE_INITIAL, PRICE_MONTHLY, money } from '../config.js';
 
 /* =========================================================
    ABUNDANCE CODE — Home
-   Layout based on "Nuevo diseño Pagina web.pdf"
+   Túnel de venta de la app que lee tu carta natal.
    Palette: Ivory #F5F1ED · Beige #E8DCC8 · Champagne #D4AF37 · Moka #3D2817
    Typography: Montserrat (única fuente)
    Sections:
-     1. Hero — dolor
+     1. Hero — dolor + captura real de la app
      2. Identificación emocional
-     3. Patrones y ciclos
-     4. Cómo funciona
-     5. Qué desbloquea tu portal
-     6. Inside the box
-     7. Lifestyle / experiencia diaria
-     8. Final CTA + FAQ link
+     3. Qué puedes descubrir
+     4. Cómo funciona (3 pasos hasta entrar a la app)
+     5. Dentro de la app
+     6. Qué desbloquea tu portal
+     7. Testimonios
+     8. Prueba gratis + precio
+     9. CTA final
    ========================================================= */
 
 const fadeUp = { hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } };
@@ -87,20 +91,30 @@ function IconLock() {
     </svg>
   );
 }
+/* Rueda zodiacal — representa la carta natal */
+function IconChart() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="#D4AF37" strokeWidth="1.5">
+      <circle cx="12" cy="12" r="9" />
+      <circle cx="12" cy="12" r="5.5" />
+      <path d="M12 3v3M12 18v3M3 12h3M18 12h3" strokeLinecap="round" />
+    </svg>
+  );
+}
+/* Reloj — la guía que se actualiza cada día */
+function IconDaily() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="#D4AF37" strokeWidth="1.5">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7.5v5l3.5 2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
 function IconCard() {
   return (
     <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="#D4AF37" strokeWidth="1.5">
       <rect x="3" y="6" width="18" height="13" rx="2" />
       <path d="M3 11h18M7 16h4" strokeLinecap="round" />
-    </svg>
-  );
-}
-function IconSphere() {
-  return (
-    <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="#D4AF37" strokeWidth="1.5">
-      <circle cx="12" cy="12" r="8" />
-      <ellipse cx="12" cy="12" rx="8" ry="3.5" />
-      <path d="M4 12h16" />
     </svg>
   );
 }
@@ -126,55 +140,14 @@ function IconCheck() {
   );
 }
 
-/* Real sphere photo (transparent PNG over ivory background) */
-function SphereImage({ size = 420, className = '', priority = false }) {
-  return (
-    <img
-      src="/img/sphere-transparent.png"
-      alt="Esfera de cristal Abundance Code"
-      width={size}
-      height={size}
-      loading={priority ? 'eager' : 'lazy'}
-      decoding="async"
-      className={`block object-contain ${className}`}
-      style={{ width: '100%', maxWidth: size, height: 'auto' }}
-    />
-  );
-}
-
-/* Dashboard mockup image */
-function DashboardImage({ src = '/img/dashboard.png', alt = 'Vista del portal personal Abundance Code' }) {
-  return (
-    <img
-      src={src}
-      alt={alt}
-      loading="lazy"
-      decoding="async"
-      className="block w-full h-auto rounded-2xl"
-      style={{
-        boxShadow: '0 20px 60px rgba(61,40,23,0.12), 0 4px 16px rgba(61,40,23,0.06)',
-        background: '#FFFDF7',
-      }}
-    />
-  );
-}
-
-/* Real box / unboxing photo */
-function BoxImage() {
-  return (
-    <img
-      src="/img/box.png"
-      alt="Caja Abundance Code con esfera, tarjeta de activación y código personal"
-      loading="lazy"
-      decoding="async"
-      className="block w-full h-auto rounded-2xl"
-      style={{ boxShadow: '0 24px 60px rgba(61,40,23,0.28), 0 6px 20px rgba(61,40,23,0.14)' }}
-    />
-  );
-}
-
 export default function Home() {
   const { t } = useLang();
+  /* Rellena los huecos del copy con los valores reales del precio. */
+  const vars = (key) => t(key)
+    .replace('{days}', INCLUDED_DAYS)
+    .replace('{initial}', money(PRICE_INITIAL))
+    .replace('{price}', money(PRICE_MONTHLY));
+
   return (
     <main className="bg-[#F5F1ED] pt-16 md:pt-20">
 
@@ -183,7 +156,9 @@ export default function Home() {
           ========================================================= */}
       <section className="px-4 md:px-6 pt-6 pb-12 md:pt-10 md:pb-16">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-10 items-center">
+          {/* Columnas asimétricas: la captura de la app pesa más que el texto,
+              porque es la prueba de que el producto existe. */}
+          <div className="grid md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-8 md:gap-10 items-center">
 
             {/* Left — copy */}
             <div>
@@ -234,11 +209,25 @@ export default function Home() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="flex flex-col sm:flex-row gap-3 mb-8"
+                className="flex flex-col sm:flex-row gap-3 mb-4"
               >
-                <Link to="/checkout" className="btn-primary w-full sm:w-auto text-center">{t('h.hero.cta1')}</Link>
-                <Link to="/como-funciona" className="btn-outline w-full sm:w-auto text-center">{t('h.hero.cta2')}</Link>
+                <StartCta campaign="hero" className="w-full sm:w-auto text-center">
+                  {vars('h.hero.cta1')}
+                </StartCta>
+                <Link to="/how-it-works" className="btn-outline w-full sm:w-auto text-center">
+                  {t('h.hero.cta2')}
+                </Link>
               </motion.div>
+
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.35 }}
+                className="flex items-center gap-2 text-[#5B3E2A] mb-8"
+                style={{ fontSize: '0.75rem' }}
+              >
+                <IconCheck /> <span>{vars('h.hero.trialNote')}</span>
+              </motion.p>
 
               {/* bullets */}
               <motion.div
@@ -248,10 +237,10 @@ export default function Home() {
                 className="flex flex-wrap items-center gap-5 text-[#3D2817]"
               >
                 <div className="flex items-center gap-2 text-[0.72rem] tracking-[0.18em] uppercase">
-                  <IconSphere /> <span>{t('h.hero.b1')}</span>
+                  <IconChart /> <span>{t('h.hero.b1')}</span>
                 </div>
                 <div className="flex items-center gap-2 text-[0.72rem] tracking-[0.18em] uppercase">
-                  <IconCard /> <span>{t('h.hero.b2')}</span>
+                  <IconDaily /> <span>{t('h.hero.b2')}</span>
                 </div>
                 <div className="flex items-center gap-2 text-[0.72rem] tracking-[0.18em] uppercase">
                   <IconLock /> <span>{t('h.hero.b3')}</span>
@@ -259,32 +248,14 @@ export default function Home() {
               </motion.div>
             </div>
 
-            {/* Right — animated sphere over dashboard backdrop */}
-            <div className="relative flex justify-center items-center">
-              {/* Dashboard backdrop (blurred, low-opacity) */}
-              <motion.div
-                className="absolute inset-0 flex items-center justify-center pointer-events-none"
-                style={{ filter: 'blur(1.5px)', opacity: 0.5 }}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 0.5, x: 0 }}
-                transition={{ duration: 1, delay: 0.4 }}
-                aria-hidden="true"
-              >
-                <img
-                  src="/img/dashboard.png"
-                  alt=""
-                  className="w-full max-w-md h-auto rounded-2xl"
-                  style={{
-                    transform: 'translateX(8%) rotate(-2deg)',
-                    boxShadow: '0 30px 80px rgba(61,40,23,0.18)',
-                  }}
-                />
-              </motion.div>
-              {/* Sphere foreground — premium animation */}
-              <div className="relative z-10 w-full flex justify-center">
-                <AnimatedSphere size={440} priority />
-              </div>
-            </div>
+            {/* Right — captura real de la app */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <AppScreenshot priority />
+            </motion.div>
           </div>
 
           {/* Testimonial carousel bar */}
@@ -361,11 +332,26 @@ export default function Home() {
             </motion.p>
             <AccentDivider />
             <motion.h2 variants={fadeUp}
-              className="text-[#3D2817] font-semibold mb-12 max-w-3xl mx-auto"
+              className="text-[#3D2817] font-semibold mb-8 max-w-3xl mx-auto"
               style={{ fontSize: 'clamp(1.5rem, 3vw, 2.2rem)', lineHeight: 1.2 }}
             >
               {t('h.cyc.h2')}
             </motion.h2>
+
+            {/* Banda panorámica. El recorte 1254×448 viene hecho en el archivo,
+                no forzado por CSS: el contenedor usa esa misma proporción, así
+                que la imagen se ve completa y sin ampliar a ningún ancho.
+                Se eligió una foto clara: sobre fondo marfil, una imagen oscura
+                se lee como un bloque pesado y rompe la página. */}
+            <motion.div variants={fadeUp} className="mb-10 md:mb-12">
+              <SectionImage
+                src="/img/app-desk-wide.webp"
+                alt={t('h.img.deskwide')}
+                width={1254}
+                height={448}
+                className="aspect-[1254/448]"
+              />
+            </motion.div>
 
             {/* 3 tarjetas */}
             <div className="grid md:grid-cols-3 gap-6 md:gap-8 text-left">
@@ -431,7 +417,7 @@ export default function Home() {
                 >
                   <div className="flex items-center gap-3 mb-3">
                     <span
-                      className="w-9 h-9 rounded-full flex items-center justify-center font-semibold"
+                      className="w-9 h-9 rounded-full flex items-center justify-center font-semibold shrink-0"
                       style={{ border: '1px solid #D4AF37', color: '#D4AF37' }}
                     >
                       {s.n}
@@ -441,11 +427,27 @@ export default function Home() {
                     </h3>
                   </div>
                   <p className="text-[#3D2817]/75" style={{ fontSize: '0.85rem', lineHeight: 1.55 }}>
-                    {t(s.dKey)}
+                    {vars(s.dKey)}
                   </p>
                 </motion.div>
               ))}
             </div>
+
+            {/* A dónde se llega tras los tres pasos */}
+            <motion.div variants={fadeUp} className="max-w-xs mx-auto mb-10">
+              <SectionImage
+                src="/img/app-phone-portal.webp"
+                alt={t('h.img.phone')}
+                width={900}
+                height={900}
+              />
+            </motion.div>
+
+            <motion.div variants={fadeUp} className="flex justify-center">
+              <StartCta campaign="how-it-works-strip" className="px-9">
+                {vars('h.how.cta')}
+              </StartCta>
+            </motion.div>
 
             <AccentDivider />
             <motion.p variants={fadeUp}
@@ -483,9 +485,89 @@ export default function Home() {
       </section>
 
       {/* =========================================================
-          5. QUÉ DESBLOQUEA TU PORTAL
+          5. DENTRO DE LA APP
+          (antes: "Inside the box" — el producto ya no es un objeto)
           ========================================================= */}
       <section className="section-pad">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+
+            {/* Left — bodegón multipantalla.
+                Antes repetía la misma captura del hero; aquí conviene una
+                imagen distinta que enseñe varios módulos a la vez, que es
+                justo lo que enumera la lista de al lado. */}
+            <motion.div
+              initial={{ opacity: 0, x: -16 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+            >
+              <SectionImage
+                src="/img/app-showcase.webp"
+                alt={t('h.img.showcase')}
+                width={1100}
+                height={1100}
+              />
+            </motion.div>
+
+            {/* Right — lista de módulos */}
+            <AnimSection>
+              <motion.p variants={fadeUp} className="eyebrow mb-3">
+                {t('h.app.eyebrow')}
+              </motion.p>
+              <motion.h2 variants={fadeUp}
+                className="text-[#3D2817] font-semibold mb-4"
+                style={{ fontSize: 'clamp(1.4rem, 2.8vw, 2rem)', lineHeight: 1.2 }}
+              >
+                {t('h.app.h2.line1')}<br/>{t('h.app.h2.line2')}
+              </motion.h2>
+              <motion.p variants={fadeUp}
+                className="text-[#3D2817]/75 mb-6"
+                style={{ fontSize: '0.9rem', lineHeight: 1.6 }}
+              >
+                {t('h.app.sub')}
+              </motion.p>
+
+              <ul className="space-y-3 mb-6">
+                {[
+                  { icon: '🌐', key: 'h.app.item1' },
+                  { icon: '🔮', key: 'h.app.item2' },
+                  { icon: '🌙', key: 'h.app.item3' },
+                  { icon: '💡', key: 'h.app.item4' },
+                  { icon: '🌟', key: 'h.app.item5' },
+                  { icon: '🎴', key: 'h.app.item6' },
+                ].map((item, i) => (
+                  <motion.li key={i} variants={fadeUp}
+                    className="flex items-start gap-3 text-[#3D2817]"
+                    style={{ fontSize: '0.88rem', lineHeight: 1.5 }}
+                  >
+                    <span
+                      className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-base"
+                      style={{ background: '#E8DCC8' }}
+                      aria-hidden="true"
+                    >
+                      {item.icon}
+                    </span>
+                    <span className="pt-1">{t(item.key)}</span>
+                  </motion.li>
+                ))}
+              </ul>
+
+              <motion.div variants={fadeUp} className="pt-5 border-t" style={{ borderColor: '#E8DCC8' }}>
+                <p className="text-[#5B3E2A] flex items-center gap-2" style={{ fontSize: '0.85rem' }}>
+                  <span className="text-[#D4AF37]">✦</span>
+                  <span>{t('h.app.outro.lead')} <em className="text-[#D4AF37] not-italic">{t('h.app.outro.gold')}</em></span>
+                </p>
+              </motion.div>
+            </AnimSection>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================
+          6. QUÉ DESBLOQUEA TU PORTAL
+          ========================================================= */}
+      <section className="section-pad" style={{ background: '#FFFDF7' }}>
         <div className="max-w-6xl mx-auto">
           <AnimSection className="text-center">
             <p className="eyebrow mb-3">{t('h.unl.eyebrow')}</p>
@@ -511,7 +593,7 @@ export default function Home() {
               ].map((c) => (
                 <motion.div key={c.n} variants={fadeUp}
                   className="rounded-2xl overflow-hidden flex flex-col"
-                  style={{ background: '#FFFDF7', border: '1px solid #E8DCC8' }}
+                  style={{ background: '#F5F1ED', border: '1px solid #E8DCC8' }}
                 >
                   <div className="p-6">
                     <p className="text-[#D4AF37] tracking-[0.3em] mb-2" style={{ fontSize: '0.7rem' }}>{c.n}</p>
@@ -524,7 +606,7 @@ export default function Home() {
                   </div>
                   {/* mock preview */}
                   <div className="mx-4 mb-4 rounded-lg p-4 text-[#3D2817]"
-                    style={{ background: c.preview === 'alignment' ? '#1E1A16' : '#F5F1ED',
+                    style={{ background: c.preview === 'alignment' ? '#1E1A16' : '#FFFDF7',
                              color: c.preview === 'alignment' ? '#F5F1ED' : '#3D2817' }}>
                     {c.preview === 'pattern' && (
                       <div className="text-[10px] space-y-1">
@@ -542,7 +624,7 @@ export default function Home() {
                       <div className="text-[10px] space-y-2">
                         <p className="font-semibold tracking-widest" style={{ color: '#D4AF37' }}>{t('h.unl.c2.label')}</p>
                         <div className="flex items-center gap-3">
-                          <div className="w-14 h-14 rounded-full flex items-center justify-center font-semibold"
+                          <div className="w-14 h-14 rounded-full flex items-center justify-center font-semibold shrink-0"
                             style={{ border: '2px solid #D4AF37', fontSize: '14px' }}>78%</div>
                           <div className="space-y-1 text-[9px] opacity-80">
                             <p>{t('h.unl.c2.line1')}</p>
@@ -584,77 +666,6 @@ export default function Home() {
       </section>
 
       {/* =========================================================
-          6. INSIDE THE BOX
-          ========================================================= */}
-      <section className="section-pad" style={{ background: '#FFFDF7' }}>
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-
-            {/* Left — box photo */}
-            <motion.div
-              initial={{ opacity: 0, x: -16 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-            >
-              <BoxImage />
-            </motion.div>
-
-            {/* Right — content list */}
-            <AnimSection>
-              <motion.p variants={fadeUp} className="eyebrow mb-3">
-                {t('h.box.eyebrow')}
-              </motion.p>
-              <motion.h2 variants={fadeUp}
-                className="text-[#3D2817] font-semibold mb-4"
-                style={{ fontSize: 'clamp(1.4rem, 2.8vw, 2rem)', lineHeight: 1.2 }}
-              >
-                {t('h.box.h2.line1')}<br/>{t('h.box.h2.line2')}
-              </motion.h2>
-              <motion.p variants={fadeUp}
-                className="text-[#3D2817]/75 mb-6"
-                style={{ fontSize: '0.9rem', lineHeight: 1.6 }}
-              >
-                {t('h.box.sub')}
-              </motion.p>
-
-              <ul className="space-y-3 mb-6">
-                {[
-                  { icon: '🔮', key: 'h.box.item1' },
-                  { icon: '💡', key: 'h.box.item2' },
-                  { icon: '🎴', key: 'h.box.item3' },
-                  { icon: '🌐', key: 'h.box.item4' },
-                  { icon: '🌟', key: 'h.box.item5' },
-                  { icon: '🎁', key: 'h.box.item6' },
-                ].map((item, i) => (
-                  <motion.li key={i} variants={fadeUp}
-                    className="flex items-start gap-3 text-[#3D2817]"
-                    style={{ fontSize: '0.88rem', lineHeight: 1.5 }}
-                  >
-                    <span
-                      className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-base"
-                      style={{ background: '#E8DCC8' }}
-                      aria-hidden="true"
-                    >
-                      {item.icon}
-                    </span>
-                    <span className="pt-1">{t(item.key)}</span>
-                  </motion.li>
-                ))}
-              </ul>
-
-              <motion.div variants={fadeUp} className="pt-5 border-t" style={{ borderColor: '#E8DCC8' }}>
-                <p className="text-[#5B3E2A] flex items-center gap-2" style={{ fontSize: '0.85rem' }}>
-                  <span className="text-[#D4AF37]">✦</span>
-                  <span>{t('h.box.outro.lead')} <em className="text-[#D4AF37] not-italic">{t('h.box.outro.gold')}</em></span>
-                </p>
-              </motion.div>
-            </AnimSection>
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================
           7. TESTIMONIOS
           ========================================================= */}
       <section className="section-pad">
@@ -662,35 +673,89 @@ export default function Home() {
       </section>
 
       {/* =========================================================
-          8. FINAL CTA + FAQ link
+          8. PRUEBA GRATIS + PRECIO
           ========================================================= */}
-      <section className="section-pad" style={{ background: '#E8DCC8' }}>
+      <section className="section-pad" style={{ background: '#FFFDF7' }}>
         <div className="max-w-3xl mx-auto text-center">
           <AnimSection>
+            <motion.p variants={fadeUp} className="eyebrow mb-3">{t('h.price.eyebrow')}</motion.p>
             <AccentDivider />
             <motion.h2 variants={fadeUp}
               className="text-[#3D2817] font-semibold uppercase mb-4"
               style={{ fontSize: 'clamp(1.5rem, 3vw, 2.2rem)', letterSpacing: '0.02em' }}
             >
-              {t('h.cta.h2')}
+              {vars('h.price.h2')}
             </motion.h2>
             <motion.p variants={fadeUp}
-              className="text-[#3D2817]/85 max-w-xl mx-auto mb-8"
-              style={{ fontSize: '0.95rem', lineHeight: 1.6 }}
+              className="text-[#3D2817]/80 max-w-xl mx-auto mb-8"
+              style={{ fontSize: '0.92rem', lineHeight: 1.6 }}
             >
-              {t('h.cta.body.line1')}<br/>
-              {t('h.cta.body.line2')}
+              {vars('h.price.body')}
             </motion.p>
-            <motion.div variants={fadeUp} className="flex items-center justify-center mb-8">
-              <Link to="/checkout" className="btn-primary px-10 sm:px-12">{t('h.cta.btn1')}</Link>
+            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 justify-center">
+              <StartCta campaign="home-price" className="px-9">
+                {vars('h.price.cta')}
+              </StartCta>
+              <Link to="/pricing" className="btn-outline px-9 text-center">
+                {t('h.price.link')}
+              </Link>
             </motion.div>
-            <motion.p variants={fadeUp}
-              className="inline-flex items-center gap-2 text-[#5B3E2A]"
-              style={{ fontSize: '0.78rem' }}
-            >
-              <IconCheck /> <span>{t('h.cta.note')}</span>
-            </motion.p>
           </AnimSection>
+        </div>
+      </section>
+
+      {/* =========================================================
+          9. CTA FINAL
+          ========================================================= */}
+      <section className="section-pad" style={{ background: '#E8DCC8' }}>
+        {/* Dos columnas: la foto acompaña al cierre en vez de dejarlo sobre
+            beige plano. El texto se queda sobre el fondo sólido — encima de
+            la imagen perdería contraste. */}
+        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 md:gap-14 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -16 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="order-2 md:order-1"
+          >
+            <SectionImage
+              src="/img/lifestyle-desk.webp"
+              alt={t('h.img.desk')}
+              width={1000}
+              height={1000}
+            />
+          </motion.div>
+
+          <div className="text-center order-1 md:order-2">
+            <AnimSection>
+              <AccentDivider />
+              <motion.h2 variants={fadeUp}
+                className="text-[#3D2817] font-semibold uppercase mb-4"
+                style={{ fontSize: 'clamp(1.5rem, 3vw, 2.2rem)', letterSpacing: '0.02em' }}
+              >
+                {t('h.cta.h2')}
+              </motion.h2>
+              <motion.p variants={fadeUp}
+                className="text-[#3D2817]/85 mb-8"
+                style={{ fontSize: '0.95rem', lineHeight: 1.6 }}
+              >
+                {t('h.cta.body.line1')}<br/>
+                {t('h.cta.body.line2')}
+              </motion.p>
+              <motion.div variants={fadeUp} className="flex items-center justify-center mb-8">
+                <StartCta campaign="home-final" className="px-10 sm:px-12">
+                  {vars('h.cta.btn1')}
+                </StartCta>
+              </motion.div>
+              <motion.p variants={fadeUp}
+                className="inline-flex items-center gap-2 text-[#5B3E2A]"
+                style={{ fontSize: '0.78rem' }}
+              >
+                <IconCheck /> <span>{vars('h.cta.note')}</span>
+              </motion.p>
+            </AnimSection>
+          </div>
         </div>
       </section>
 

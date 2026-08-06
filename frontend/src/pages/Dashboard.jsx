@@ -1,9 +1,11 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { LogOut, Star, Zap, Clock, Crown } from 'lucide-react';
 import StarField from '../components/bits/StarField.jsx';
 import { useLang } from '../context/LanguageContext.jsx';
+
+const API = (import.meta.env.VITE_API_URL || '') + '/api';
 
 const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } };
 
@@ -20,7 +22,7 @@ export default function Dashboard() {
     if (!token) { navigate('/activate'); return; }
     if (stored) setUser(JSON.parse(stored));
 
-    fetch('/api/activation/daily', {
+    fetch(`${API}/activation/daily`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((r) => r.json())
@@ -86,7 +88,7 @@ export default function Dashboard() {
             variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
           >
             <motion.p variants={fadeUp} className="text-[#3D2817]/40 text-xs uppercase tracking-widest mb-4">
-              {t('dash.today')} Â· {new Date().toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-AU', { weekday: 'long', month: 'long', day: 'numeric' })}
+              {t('dash.today')} · {new Date().toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-AU', { weekday: 'long', month: 'long', day: 'numeric' })}
             </motion.p>
 
             {/* Frequency */}

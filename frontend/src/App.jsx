@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from './components/layout/Navbar.jsx';
 import Footer from './components/layout/Footer.jsx';
@@ -19,15 +19,13 @@ function PageWrapper({ children }) {
 }
 
 import Home from './pages/Home.jsx';
-import Product from './pages/Product.jsx';
-import Bracelet from './pages/Bracelet.jsx';
 import HowItWorks from './pages/HowItWorks.jsx';
 import PortalPage from './pages/PortalPage.jsx';
+import Pricing from './pages/Pricing.jsx';
+import AccessRecovery from './pages/AccessRecovery.jsx';
 import About from './pages/About.jsx';
 import FAQ from './pages/FAQ.jsx';
 import Contact from './pages/Contact.jsx';
-import Checkout from './pages/Checkout.jsx';
-import OrderConfirmation from './pages/OrderConfirmation.jsx';
 import Activate from './pages/Activate.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import Admin from './pages/Admin.jsx';
@@ -36,8 +34,6 @@ import BlogPostPage from './pages/BlogPostPage.jsx';
 
 import Privacy from './pages/legal/Privacy.jsx';
 import Terms from './pages/legal/Terms.jsx';
-import Returns from './pages/legal/Returns.jsx';
-import Shipping from './pages/legal/Shipping.jsx';
 import Cookies from './pages/legal/Cookies.jsx';
 import Disclaimer from './pages/legal/Disclaimer.jsx';
 
@@ -52,15 +48,13 @@ export default function App() {
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
-          <Route path="/abundance-code-sphere" element={<PageWrapper><Product /></PageWrapper>} />
-          <Route path="/bracelet" element={<PageWrapper><Bracelet /></PageWrapper>} />
           <Route path="/how-it-works" element={<PageWrapper><HowItWorks /></PageWrapper>} />
-          <Route path="/portal" element={<PageWrapper><PortalPage /></PageWrapper>} />
+          <Route path="/app" element={<PageWrapper><PortalPage /></PageWrapper>} />
+          <Route path="/pricing" element={<PageWrapper><Pricing /></PageWrapper>} />
+          <Route path="/activar-acceso" element={<PageWrapper><AccessRecovery /></PageWrapper>} />
           <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
           <Route path="/faq" element={<PageWrapper><FAQ /></PageWrapper>} />
           <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
-          <Route path="/checkout" element={<PageWrapper><Checkout /></PageWrapper>} />
-          <Route path="/order-confirmation" element={<PageWrapper><OrderConfirmation /></PageWrapper>} />
           <Route path="/activate" element={<PageWrapper><Activate /></PageWrapper>} />
           <Route path="/dashboard" element={<PageWrapper><Dashboard /></PageWrapper>} />
           <Route path="/admin" element={<Admin />} />
@@ -70,10 +64,22 @@ export default function App() {
           {/* Legal */}
           <Route path="/privacy" element={<PageWrapper><Privacy /></PageWrapper>} />
           <Route path="/terms" element={<PageWrapper><Terms /></PageWrapper>} />
-          <Route path="/returns" element={<PageWrapper><Returns /></PageWrapper>} />
-          <Route path="/shipping" element={<PageWrapper><Shipping /></PageWrapper>} />
           <Route path="/cookies" element={<PageWrapper><Cookies /></PageWrapper>} />
           <Route path="/disclaimer" element={<PageWrapper><Disclaimer /></PageWrapper>} />
+
+          {/* Rutas del sitio ecommerce anterior — se conservan como
+              redirecciones para no perder enlaces ni posicionamiento. */}
+          <Route path="/abundance-code-sphere" element={<Navigate to="/" replace />} />
+          <Route path="/bracelet"              element={<Navigate to="/" replace />} />
+          <Route path="/checkout"              element={<Navigate to="/pricing" replace />} />
+          <Route path="/order-confirmation"    element={<Navigate to="/" replace />} />
+          <Route path="/portal"                element={<Navigate to="/app" replace />} />
+          <Route path="/shipping"              element={<Navigate to="/terms" replace />} />
+          <Route path="/returns"               element={<Navigate to="/terms" replace />} />
+          <Route path="/como-funciona"         element={<Navigate to="/how-it-works" replace />} />
+
+          {/* Cualquier otra ruta vuelve al inicio */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AnimatePresence>
       {!isAdmin && <Footer />}

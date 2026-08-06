@@ -1,12 +1,12 @@
-﻿import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import {
   Package, Users, DollarSign, TrendingUp, Search, ChevronDown,
   Edit2, X, Check, LogOut, Truck, AlertCircle, RefreshCw,
 } from 'lucide-react';
 
-// â”€â”€â”€ helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-const API = import.meta.env.VITE_API_URL || '/api';
+// ─── helpers ────────────────────────────────────────────────────────────────
+const API = (import.meta.env.VITE_API_URL || '') + '/api';
 
 const STATUS_COLORS = {
   pending:    'bg-yellow-50 text-yellow-700 border-yellow-200',
@@ -33,7 +33,7 @@ function useAuthHeaders() {
   return useMemo(() => token ? { Authorization: `Bearer ${token}` } : {}, [token]);
 }
 
-// â”€â”€â”€ Login screen â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Login screen ────────────────────────────────────────────────────────────
 function LoginScreen({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -67,7 +67,7 @@ function LoginScreen({ onLogin }) {
         initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-sm"
       >
-        <p className="text-center text-xs uppercase tracking-[0.3em] text-gold font-sans mb-6">Abundance Code Â· Admin</p>
+        <p className="text-center text-xs uppercase tracking-[0.3em] text-gold font-sans mb-6">Abundance Code · Admin</p>
         <div className="rounded-2xl border border-[#E5E7EB] bg-white p-8 shadow-sm">
           <h1 className="font-serif text-2xl text-[#111827] mb-6">Sign in</h1>
           {error && (
@@ -93,7 +93,7 @@ function LoginScreen({ onLogin }) {
               type="submit" disabled={loading}
               className="w-full btn-gold text-sm disabled:opacity-60"
             >
-              {loading ? 'Signing inâ€¦' : 'Sign in'}
+              {loading ? 'Signing in…' : 'Sign in'}
             </button>
           </form>
         </div>
@@ -102,7 +102,7 @@ function LoginScreen({ onLogin }) {
   );
 }
 
-// â”€â”€â”€ Stat card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Stat card ───────────────────────────────────────────────────────────────
 function StatCard({ icon, label, value, sub }) {
   return (
     <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5 shadow-sm">
@@ -116,7 +116,7 @@ function StatCard({ icon, label, value, sub }) {
   );
 }
 
-// â”€â”€â”€ Order edit modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Order edit modal ────────────────────────────────────────────────────────
 function EditOrderModal({ order, onClose, onSave, headers }) {
   const [status, setStatus] = useState(order.status);
   const [tracking, setTracking] = useState(order.trackingNumber || '');
@@ -154,11 +154,11 @@ function EditOrderModal({ order, onClose, onSave, headers }) {
 
         <div className="mb-4">
           <p className="text-[#6B7280] text-xs font-sans mb-0.5">Customer</p>
-          <p className="text-[#111827] text-sm font-sans">{order.name} â€” {order.email}</p>
+          <p className="text-[#111827] text-sm font-sans">{order.name} — {order.email}</p>
         </div>
         <div className="mb-4">
           <p className="text-[#6B7280] text-xs font-sans mb-0.5">Product</p>
-          <p className="text-[#111827] text-sm font-sans">{order.product?.name} Â· {fmtMoney(order.product?.price)}</p>
+          <p className="text-[#111827] text-sm font-sans">{order.product?.name} · {fmtMoney(order.product?.price)}</p>
         </div>
 
         <div className="mb-4">
@@ -200,7 +200,7 @@ function EditOrderModal({ order, onClose, onSave, headers }) {
   );
 }
 
-// â”€â”€â”€ Main Admin panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Main Admin panel ─────────────────────────────────────────────────────────
 export default function Admin() {
   const [admin, setAdmin] = useState(null);
 
@@ -384,7 +384,7 @@ function AdminDashboard({ admin, onLogout }) {
       {/* Top bar */}
       <div className="border-b border-[#E5E7EB] bg-white px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <p className="text-xs uppercase tracking-[0.3em] text-gold font-sans">Abundance Code Â· Admin</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-gold font-sans">Abundance Code · Admin</p>
           <div className="hidden sm:flex gap-1">
             {['orders', 'users', 'products', 'blog'].map(t => (
               <button
@@ -425,7 +425,7 @@ function AdminDashboard({ admin, onLogout }) {
               icon={<Package size={18} />}
               label="Total Orders"
               value={stats.totalOrders}
-              sub={`${stats.byStatus?.paid || 0} paid Â· ${stats.byStatus?.shipped || 0} shipped`}
+              sub={`${stats.byStatus?.paid || 0} paid · ${stats.byStatus?.shipped || 0} shipped`}
             />
             <StatCard
               icon={<Truck size={18} />}
@@ -453,7 +453,7 @@ function AdminDashboard({ admin, onLogout }) {
                   <input
                     type="text"
                     value={searchInput} onChange={e => setSearchInput(e.target.value)}
-                    placeholder="Search by email, name, codeâ€¦"
+                    placeholder="Search by email, name, code…"
                     className="w-full pl-9 pr-4 py-2.5 bg-white border border-[#E5E7EB] rounded-xl text-[#111827] placeholder-[#9CA3AF] text-sm font-sans focus:outline-none focus:border-[#D4AF37]"
                   />
                 </div>
@@ -485,7 +485,7 @@ function AdminDashboard({ admin, onLogout }) {
             {/* Table */}
             <div className="rounded-2xl border border-[#E5E7EB] overflow-hidden bg-white shadow-sm">
               {loadingOrders ? (
-                <div className="flex items-center justify-center py-16 text-[#9CA3AF] text-sm font-sans">Loading ordersâ€¦</div>
+                <div className="flex items-center justify-center py-16 text-[#9CA3AF] text-sm font-sans">Loading orders…</div>
               ) : orders.length === 0 ? (
                 <div className="flex items-center justify-center py-16 text-[#9CA3AF] text-sm font-sans">No orders found.</div>
               ) : (
@@ -509,11 +509,11 @@ function AdminDashboard({ admin, onLogout }) {
                           className={`border-b border-[#F3F4F6] hover:bg-[#F9FAFB] transition-colors ${i % 2 === 0 ? '' : 'bg-[#FAFAFA]'}`}
                         >
                           <td className="px-5 py-4">
-                            <p className="text-[#111827] font-sans text-sm">{order.name || 'â€”'}</p>
+                            <p className="text-[#111827] font-sans text-sm">{order.name || '—'}</p>
                             <p className="text-[#6B7280] font-sans text-xs">{order.email}</p>
                           </td>
                           <td className="px-5 py-4 hidden md:table-cell">
-                            <p className="text-[#374151] font-sans text-xs">{order.product?.name || 'â€”'}</p>
+                            <p className="text-[#374151] font-sans text-xs">{order.product?.name || '—'}</p>
                             {order.product?.includesBracelet && (
                               <span className="text-gold/70 text-xs font-sans">+ Bracelet</span>
                             )}
@@ -529,7 +529,7 @@ function AdminDashboard({ admin, onLogout }) {
                             )}
                           </td>
                           <td className="px-5 py-4 hidden lg:table-cell">
-                            <p className="text-[#6B7280] text-xs font-mono">{order.activationCode || 'â€”'}</p>
+                            <p className="text-[#6B7280] text-xs font-mono">{order.activationCode || '—'}</p>
                             {order.isActivated && <span className="text-green-400 text-xs font-sans">Activated</span>}
                           </td>
                           <td className="px-5 py-4 hidden lg:table-cell">
@@ -589,7 +589,7 @@ function AdminDashboard({ admin, onLogout }) {
                 <input
                   type="text"
                   value={userSearchInput} onChange={e => setUserSearchInput(e.target.value)}
-                  placeholder="Search users by email or nameâ€¦"
+                  placeholder="Search users by email or name…"
                   className="w-full pl-9 pr-4 py-2.5 bg-white border border-[#E5E7EB] rounded-xl text-[#111827] placeholder-[#9CA3AF] text-sm font-sans focus:outline-none focus:border-[#D4AF37]"
                 />
               </div>
@@ -600,7 +600,7 @@ function AdminDashboard({ admin, onLogout }) {
 
             <div className="rounded-2xl border border-[#E5E7EB] overflow-hidden bg-white shadow-sm">
               {loadingUsers ? (
-                <div className="flex items-center justify-center py-16 text-[#9CA3AF] text-sm font-sans">Loading usersâ€¦</div>
+                <div className="flex items-center justify-center py-16 text-[#9CA3AF] text-sm font-sans">Loading users…</div>
               ) : users.length === 0 ? (
                 <div className="flex items-center justify-center py-16 text-[#9CA3AF] text-sm font-sans">No users found.</div>
               ) : (
@@ -619,13 +619,13 @@ function AdminDashboard({ admin, onLogout }) {
                       {users.map((user, i) => (
                         <tr key={user._id} className={`border-b border-[#F3F4F6] hover:bg-[#F9FAFB] transition-colors ${i % 2 === 0 ? '' : 'bg-[#FAFAFA]'}`}>
                           <td className="px-5 py-4">
-                            <p className="text-[#111827] font-sans text-sm">{user.name || 'â€”'}</p>
+                            <p className="text-[#111827] font-sans text-sm">{user.name || '—'}</p>
                             <p className="text-[#6B7280] font-sans text-xs">{user.email}</p>
                           </td>
                           <td className="px-5 py-4 hidden md:table-cell">
                             {user.birthDate ? (
                               <p className="text-[#6B7280] font-sans text-xs">
-                                {new Date(user.birthDate).toLocaleDateString()}{user.birthTime ? ` Â· ${user.birthTime}` : ''}<br />
+                                {new Date(user.birthDate).toLocaleDateString()}{user.birthTime ? ` · ${user.birthTime}` : ''}<br />
                                 {user.birthPlace || ''}
                               </p>
                             ) : <p className="text-[#D1D5DB] text-xs font-sans">Not set</p>}
@@ -646,7 +646,7 @@ function AdminDashboard({ admin, onLogout }) {
                           </td>
                           <td className="px-5 py-4 hidden lg:table-cell">
                             {user.isActivated
-                              ? <span className="text-green-400 text-xs font-sans">âœ“ {user.activatedAt ? fmtDate(user.activatedAt) : 'Yes'}</span>
+                              ? <span className="text-green-400 text-xs font-sans">✓ {user.activatedAt ? fmtDate(user.activatedAt) : 'Yes'}</span>
                               : <span className="text-[#9CA3AF] text-xs font-sans">Pending</span>}
                           </td>
                           <td className="px-5 py-4 hidden lg:table-cell">
@@ -720,7 +720,7 @@ function AdminDashboard({ admin, onLogout }) {
                   <textarea
                     rows={3} value={productForm.description}
                     onChange={e => setProductForm(p => ({ ...p, description: e.target.value }))}
-                    placeholder="Describe the productâ€¦"
+                    placeholder="Describe the product…"
                     className="w-full bg-white border border-[#E5E7EB] rounded-xl px-4 py-3 text-[#111827] placeholder-[#9CA3AF] text-sm font-sans focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]/20 resize-none"
                   />
                 </div>
@@ -729,7 +729,7 @@ function AdminDashboard({ admin, onLogout }) {
                   <input
                     type="url" value={productForm.imageUrl}
                     onChange={e => setProductForm(p => ({ ...p, imageUrl: e.target.value }))}
-                    placeholder="https://â€¦"
+                    placeholder="https://…"
                     className="w-full bg-white border border-[#E5E7EB] rounded-xl px-4 py-3 text-[#111827] placeholder-[#9CA3AF] text-sm font-sans focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]/20"
                   />
                   {productForm.imageUrl && (
@@ -758,7 +758,7 @@ function AdminDashboard({ admin, onLogout }) {
 
             {/* Product list */}
             {loadingProducts ? (
-              <div className="flex items-center justify-center py-16 text-[#9CA3AF] text-sm font-sans">Loading productsâ€¦</div>
+              <div className="flex items-center justify-center py-16 text-[#9CA3AF] text-sm font-sans">Loading products…</div>
             ) : products.length === 0 && !productForm ? (
               <div className="flex flex-col items-center justify-center py-16 text-[#9CA3AF] text-sm font-sans gap-3">
                 <p>No products yet.</p>
@@ -889,7 +889,7 @@ function AdminDashboard({ admin, onLogout }) {
             {/* Blog list */}
             <div className="rounded-2xl border border-[#E5E7EB] overflow-hidden bg-white shadow-sm">
               {loadingBlog ? (
-                <div className="flex items-center justify-center py-16 text-[#9CA3AF] text-sm font-sans">Loading postsâ€¦</div>
+                <div className="flex items-center justify-center py-16 text-[#9CA3AF] text-sm font-sans">Loading posts…</div>
               ) : blogPosts.length === 0 ? (
                 <div className="flex items-center justify-center py-16 text-[#9CA3AF] text-sm font-sans">No posts yet. Create your first one.</div>
               ) : (

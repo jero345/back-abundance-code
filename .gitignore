@@ -72,5 +72,20 @@ coverage/
 # Source banco de imágenes (we already copied what we need to /public/img)
 frontend/BANCO DE IMÁGENES/
 
+# ─────────────────────────────────────────────
+# Material pesado que no pertenece al repo
+#
+# Son ~390 MB entre copias de despliegue, zips y originales sin comprimir.
+# Lo que la web usa de verdad vive en frontend/public/img y pesa 612 KB;
+# estos son los archivos de trabajo previos.
+# ─────────────────────────────────────────────
+*.zip
+frontend/abundance-code-deploy/
+frontend/abundance-code-deploy-*/
+
+# Originales sin optimizar de las fotos de sección (15 MB).
+# Las versiones .webp que sirve la web sí están versionadas.
+frontend/_originales/
+
 # Claude config (machine-local)
 .claude/

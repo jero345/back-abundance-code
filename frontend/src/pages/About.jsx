@@ -1,7 +1,8 @@
-﻿import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import StarField from '../components/bits/StarField.jsx';
 import { useLang } from '../context/LanguageContext.jsx';
+import StartCta from '../components/ui/StartCta.jsx';
+import SectionImage from '../components/ui/SectionImage.jsx';
 
 const fadeUp = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } };
 
@@ -46,9 +47,20 @@ export default function About() {
           variants={{ visible: { transition: { staggerChildren: 0.14 } } }}
         >
           <motion.p variants={fadeUp} className="text-gold text-xs uppercase tracking-[0.3em] mb-4 font-sans">{t('about.label')}</motion.p>
-          <motion.h1 variants={fadeUp} className="font-serif text-4xl md:text-6xl mb-16 leading-tight">
+          <motion.h1 variants={fadeUp} className="font-serif text-4xl md:text-6xl mb-8 leading-tight">
             Abundance Code
           </motion.h1>
+
+          <motion.div variants={fadeUp} className="mb-16">
+            <SectionImage
+              src="/img/lifestyle-window.webp"
+              alt={t('about.img')}
+              width={1000}
+              height={1000}
+              className="h-60 sm:h-72 md:h-96"
+              priority
+            />
+          </motion.div>
 
           <Block
             title={t('about.s1.h')}
@@ -86,7 +98,7 @@ export default function About() {
             <ul className="space-y-3 mb-6">
               {[t('about.commit.1'), t('about.commit.2'), t('about.commit.3'), t('about.commit.4')].map(item => (
                 <li key={item} className="flex items-start gap-3 text-[#3D2817]/85 font-sans leading-relaxed">
-                  <span className="text-gold mt-1 flex-shrink-0">â€”</span>
+                  <span className="text-gold mt-1 flex-shrink-0">—</span>
                   <span>{item}</span>
                 </li>
               ))}
@@ -100,9 +112,9 @@ export default function About() {
           <motion.div variants={fadeUp} className="text-center card-gold rounded-2xl p-10">
             <p className="font-serif text-2xl mb-2">{t('about.cta.h')}</p>
             <p className="text-[#3D2817]/80 font-sans mb-8">{t('about.cta.p')}</p>
-            <Link to="/checkout" className="btn-gold text-base px-10 py-4">
+            <StartCta campaign="about" className="text-base px-10 py-4">
               {t('about.cta.btn')}
-            </Link>
+            </StartCta>
           </motion.div>
         </motion.div>
       </div>

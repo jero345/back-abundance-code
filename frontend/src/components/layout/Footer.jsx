@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 import { useLang } from '../../context/LanguageContext.jsx';
 
 export default function Footer() {
@@ -36,7 +36,9 @@ export default function Footer() {
             <ul className="space-y-2">
               {[
                 { label: t('footer.home'),    href: '/' },
-                { label: t('footer.product'), href: '/abundance-code-sphere' },
+                { label: t('footer.app'),     href: '/app' },
+                { label: t('footer.pricing'), href: '/pricing' },
+                { label: t('footer.blog'),    href: '/blog' },
                 { label: t('footer.about'),   href: '/about' },
                 { label: t('footer.faq'),     href: '/faq' },
                 { label: t('footer.contact'), href: '/contact' },
@@ -57,9 +59,10 @@ export default function Footer() {
             </p>
             <ul className="space-y-2">
               {[
-                { label: t('footer.terms'),   href: '/terms' },
-                { label: t('footer.privacy'), href: '/privacy' },
-                { label: t('footer.refund'),  href: '/returns' },
+                { label: t('footer.terms'),      href: '/terms' },
+                { label: t('footer.privacy'),    href: '/privacy' },
+                { label: t('footer.cookies'),    href: '/cookies' },
+                { label: t('footer.disclaimer'), href: '/disclaimer' },
               ].map((link) => (
                 <li key={link.href}>
                   <Link to={link.href} className="text-[#5B3E2A] hover:text-[#3D2817] text-sm transition-colors">
@@ -74,7 +77,7 @@ export default function Footer() {
         <div className="border-t pt-8 flex flex-col md:flex-row items-center justify-between gap-4"
           style={{ borderColor: '#E8DCC8' }}>
           <p className="text-[#5B3E2A] text-xs">{t('footer.rights')}</p>
-          <p className="text-[#5B3E2A]/70 text-xs">www.abundancecode.com</p>
+          <p className="text-[#5B3E2A]/70 text-xs">www.abundacecode.com</p>
         </div>
       </div>
     </footer>

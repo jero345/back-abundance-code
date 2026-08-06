@@ -1,9 +1,10 @@
 ﻿import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import CrystalSphere from '../components/bits/CrystalSphere.jsx';
 import StarField from '../components/bits/StarField.jsx';
 import { useLang } from '../context/LanguageContext.jsx';
+
+const API = (import.meta.env.VITE_API_URL || '') + '/api';
 
 const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } };
 
@@ -30,7 +31,7 @@ export default function Activate() {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('/api/activation/activate', {
+      const res = await fetch(`${API}/activation/activate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
@@ -58,7 +59,8 @@ export default function Activate() {
           className="text-center mb-10"
         >
           <motion.div variants={fadeUp} className="flex justify-center mb-6">
-            <CrystalSphere size={140} />
+            <img src="/img/symbol-transparent.png" alt="" width={72} height={72}
+              style={{ width: 72, height: 72, objectFit: 'contain' }} />
           </motion.div>
           <motion.h1 variants={fadeUp} className="font-serif text-4xl mb-3">
             {t('activate.h1')}

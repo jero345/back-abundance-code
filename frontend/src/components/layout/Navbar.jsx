@@ -3,14 +3,18 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLang } from '../../context/LanguageContext.jsx';
+import AppCta from '../ui/AppCta.jsx';
+import StartCta from '../ui/StartCta.jsx';
 
+/* Nav enfocado en el funnel: la app, cómo funciona, precio.
+   Sobre nosotros y contacto viven en el footer. */
 const NAV_KEYS = [
   { key: 'nav.home',    href: '/' },
-  { key: 'nav.product', href: '/abundance-code-sphere' },
+  { key: 'nav.app',     href: '/app' },
+  { key: 'nav.how',     href: '/how-it-works' },
+  { key: 'nav.pricing', href: '/pricing' },
   { key: 'nav.blog',    href: '/blog' },
-  { key: 'nav.about',   href: '/about' },
   { key: 'nav.faq',     href: '/faq' },
-  { key: 'nav.contact', href: '/contact' },
 ];
 
 export default function Navbar() {
@@ -87,9 +91,18 @@ export default function Navbar() {
             >
               {lang === 'es' ? 'EN' : 'ES'}
             </button>
-            <Link to="/checkout" className="btn-primary text-xs px-5 py-2.5">
+            {/* "Entrar" para quien ya pagó — va directo a la app */}
+            <AppCta
+              campaign="navbar-login"
+              path="/"
+              variant="link"
+              className="font-sans text-sm text-[#5B3E2A] hover:text-[#3D2817] transition-colors"
+            >
+              {t('nav.login')}
+            </AppCta>
+            <StartCta campaign="navbar" className="text-xs px-5 py-2.5">
               {t('nav.cta')}
-            </Link>
+            </StartCta>
           </div>
 
           {/* Mobile lang toggle + hamburger */}
@@ -172,9 +185,17 @@ export default function Navbar() {
                 exit={{ opacity: 0 }} transition={{ duration: 0.4, delay: 0.42 }}
                 className="w-full"
               >
-                <Link to="/checkout" className="btn-primary w-full text-sm py-4 text-center block">
+                <StartCta campaign="navbar-mobile" className="w-full text-sm py-4 text-center">
                   {t('nav.cta')}
-                </Link>
+                </StartCta>
+                <AppCta
+                  campaign="navbar-mobile-login"
+                  path="/"
+                  variant="outline"
+                  className="mt-3 w-full text-sm py-3 text-center"
+                >
+                  {t('nav.login')}
+                </AppCta>
                 <button
                   onClick={toggle}
                   className="mt-4 w-full font-sans text-xs tracking-widest uppercase text-[#5B3E2A] hover:text-[#3D2817] transition-colors border border-[#E8DCC8] hover:border-[#D4AF37] rounded py-2"
@@ -189,7 +210,7 @@ export default function Navbar() {
               transition={{ delay: 0.5 }}
               className="absolute bottom-8 flex items-center gap-5"
             >
-              {[['Terms', '/terms'], ['Privacy', '/privacy'], ['Returns', '/returns']].map(([label, href]) => (
+              {[['Terms', '/terms'], ['Privacy', '/privacy'], ['Contact', '/contact']].map(([label, href]) => (
                 <Link key={href} to={href} className="text-[#5B3E2A]/70 text-[10px] tracking-widest uppercase hover:text-[#3D2817] transition-colors font-sans">
                   {label}
                 </Link>

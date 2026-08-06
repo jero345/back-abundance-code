@@ -1,4 +1,4 @@
-import LegalPage from './LegalPage.jsx';
+﻿import LegalPage from './LegalPage.jsx';
 import { useLang } from '../../context/LanguageContext.jsx';
 
 export default function Privacy() {
@@ -19,7 +19,7 @@ export default function Privacy() {
       <h2>{t('privacy.6h')}</h2>
       <p>{t('privacy.6p')}</p>
       <h2>{t('privacy.7h')}</h2>
-      <p>{t('privacy.7p')} <strong>support@abundancecode.com</strong></p>
+      <p>{t('privacy.7p')} <strong>support@abundacecode.com</strong></p>
     </LegalPage>
   );
 }
